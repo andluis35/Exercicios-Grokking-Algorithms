@@ -1,6 +1,6 @@
 package quicksort;
 
-import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * @author Anderson Luis
@@ -9,57 +9,73 @@ import java.util.ArrayList;
 public class QuickSort {
 
     public static void main(String[] args) {
-        ArrayList<Integer> array = new ArrayList<Integer>();
-
-        array.add(7);
-        array.add(5);
-        array.add(2);
-        array.add(6);
-        array.add(11);
-        array.add(10);
-        array.add(12);
+        Random randomNumber = new Random();
+        int[] array = new int[10];
         
-        array = quickSort(array);
+        for(int i = 0; i < array.length; i++) {
+            array[i] = randomNumber.nextInt(100);
+        }
         
-        System.out.println("----" + array.size() + "-----");
+        System.out.print("ANTES: ");
+        printArray(array);
         
-        for(int i = 0; i < array.size(); i++) {
-            System.out.print(array.get(i) + " ");
+        quickSort(array, 0, array.length-1);
+        
+        System.out.print("DEPOIS: ");
+        printArray(array);
+    }
+    
+    public static void quickSort(int[] array, int start, int end) {
+        int pivotIndex;
+        int pivot;
+        int leftPointer;
+        
+        if(start >= end) {
+            return;
+        }
+        else {
+            pivotIndex = new Random().nextInt(end - start) + start;
+            pivot = array[pivotIndex];
+            swap(array, pivotIndex, end);
+            
+            leftPointer = partition(array, start, end, pivot);
+            
+            quickSort(array, start, leftPointer - 1);
+            quickSort(array, leftPointer + 1, end);
         }
     }
     
-    public static ArrayList<Integer> quickSort(ArrayList<Integer> array) {
-        ArrayList<Integer> leftSide = new ArrayList<Integer>();
-        ArrayList<Integer> rightSide = new ArrayList<Integer>();
-        ArrayList<Integer> newArray = new ArrayList<Integer>();
-        
-        int pivot;
-        int element;
-        
-        if(array.size() < 2) {
-            return array;
-        }
-        else {
-            pivot = array.get(0);
-
-            for(int i = 0; i < array.size(); i++) {
-                element = array.get(i);
-                if(element < pivot) {
-                    leftSide.add(element);
-                }
-                else {
-                    rightSide.add(element);
-                }
+    public static int partition(int[] array, int start, int end, int pivot) {
+        int leftPointer = start;
+        int rightPointer = end;
+            
+        while(leftPointer < rightPointer) {
+            while(array[leftPointer] <= pivot && leftPointer < rightPointer) {
+                leftPointer++;
             }
-            
-            leftSide = quickSort(leftSide);
-            //rightSide = quickSort(rightSide);
-            
-            newArray.addAll(leftSide);
-            newArray.addAll(rightSide);
-            
-            return newArray;
+                
+            while(array[rightPointer] >= pivot && leftPointer < rightPointer) {
+                rightPointer--;
+            }
+                
+            swap(array, leftPointer, rightPointer);
         }
+            
+        swap(array, leftPointer, end);
+        return leftPointer;
+    }
+    
+    public static void swap(int[] array, int index1, int index2) {
+        int temp = array[index1];
+        array[index1] = array[index2];
+        array[index2] = temp;
+    }
+    
+    public static void printArray(int[] array) {
+        for(int value: array) {
+            System.out.print(value + " ");
+        }
+        System.out.println("");
     }
     
 }
