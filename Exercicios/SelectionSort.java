@@ -33,17 +33,6 @@ public class SelectionSort {
         System.out.println("\n-------------------------");
     }
     
-    public static int searchForMinor(ArrayList<Integer> array) {
-        int minorIndex = 0;
-        
-        for(int i = 0; i < array.size(); i++) {
-            if(array.get(i) < array.get(minorIndex)) {
-                minorIndex = i;
-            }
-        }
-        return minorIndex;
-    }
-    
     public static ArrayList<Integer> selectionSort(ArrayList<Integer> array) {
         ArrayList<Integer> newArray = new ArrayList<Integer>();
         int minorIndex;
@@ -57,6 +46,17 @@ public class SelectionSort {
         }
 
         return newArray;
+    }
+    
+    public static int searchForMinor(ArrayList<Integer> array) {
+        int minorIndex = 0;
+        
+        for(int i = 0; i < array.size(); i++) {
+            if(array.get(i) < array.get(minorIndex)) {
+                minorIndex = i;
+            }
+        }
+        return minorIndex;
     }
     
 }
