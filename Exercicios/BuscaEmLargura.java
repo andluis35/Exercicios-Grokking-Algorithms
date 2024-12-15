@@ -26,10 +26,10 @@ public class BuscaEmLargura {
         Queue<String> possibleSellersQueue = new LinkedList<>();
         possibleSellersQueue.addAll(graph.get(name));
         
-        while(!possibleSellersQueue.isEmpty()) {
+        while(searchQueueIsNotEmpty(possibleSellersQueue)) {
             String person = possibleSellersQueue.poll();
             
-            if(!searched.contains(person)) {
+            if(personWasNotSearched(searched, person)) {
                 if(isMangoSeller(person)) {
                     System.out.println(person + " é um(a) vendedor(a) de manga!");
                     return true;
@@ -42,6 +42,14 @@ public class BuscaEmLargura {
         }
         
         return false;
+    }
+    
+    public static boolean searchQueueIsNotEmpty(Queue<String> possibleSellersQueue) {
+        return !possibleSellersQueue.isEmpty();
+    }
+    
+    public static boolean personWasNotSearched(ArrayList<String> searched, String person) {
+        return !searched.contains(person);
     }
     
     public static boolean isMangoSeller(String person) {
